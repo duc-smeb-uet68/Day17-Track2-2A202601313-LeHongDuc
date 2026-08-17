@@ -1,6 +1,6 @@
 # Báo cáo LAB 17 — Data Pipeline Engineering
 
-**Họ tên:** (chưa được cung cấp)  **Lớp:** AICB-P2T2  **Ngày:** 17/08/2026
+**Họ tên:** Lê Hồng Đức **Lớp:** K3- Track 2  **Ngày:** 17/08/2026
 
 ---
 
