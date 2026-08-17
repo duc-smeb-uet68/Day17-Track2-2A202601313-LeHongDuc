@@ -45,16 +45,17 @@
 #}
 
 {% macro normalize_priority(col) %}
-    -- TODO(nhiệm vụ 3): thay biểu thức dưới đây bằng một khối CASE xử lý
-    -- đủ ba nhóm ở trên.
-    --
-    --     case
-    --         when <nhóm 1: đã là số hợp lệ>  then <giữ nguyên>
-    --         when <nhóm 2: nhãn chữ>         then <số tương ứng>
-    --         ...
-    --         else null                        -- nhóm 3
-    --     end
-    try_cast({{ col }} as integer)
+    case lower(trim({{ col }}))
+        when '1'      then 1
+        when '2'      then 2
+        when '3'      then 3
+        when '4'      then 4
+        when 'urgent' then 1
+        when 'high'   then 2
+        when 'medium' then 3
+        when 'low'    then 4
+        else null
+    end
 {% endmacro %}
 
 

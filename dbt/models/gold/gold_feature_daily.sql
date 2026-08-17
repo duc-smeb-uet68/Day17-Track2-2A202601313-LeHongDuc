@@ -31,6 +31,8 @@
 
 {{ config(
     materialized     = 'incremental',
+    unique_key       = ['event_date', 'customer_id'],
+    incremental_strategy = 'delete+insert',
     on_schema_change = 'fail'
 ) }}
 
@@ -49,7 +51,11 @@ select
 from {{ ref('silver_events') }}
 
 {% if is_incremental() %}
-where event_date > (select max(event_date) from {{ this }})
+-- P99 độ trễ Bronze là ~2.73 ngày; tính lại 3 ngày gần nhất để nhận
+-- các event đến muộn mà vẫn giới hạn chi phí mỗi lượt chạy.
+where event_date >= (
+    select max(event_date) - interval 3 day from {{ this }}
+)
 {% endif %}
 
 group by 1, 2, 3, 4
